@@ -57,7 +57,7 @@ const PaymentScreen: React.FC<PaymentScreenProps> = ({route, navigation}) => {
       <DefaultPadding style={{marginTop: 75}}>
         <View style={{marginBottom: 30}}>
           <Button
-            onPress={() => navigation.navigate('StripeWidget')}
+            onPress={() => navigation.navigate('CustomStripeWidgetScreen')}
             title="Stripe Native Element"
             color="#6FBAFF"
             accessibilityLabel="Learn more about this purple button"
