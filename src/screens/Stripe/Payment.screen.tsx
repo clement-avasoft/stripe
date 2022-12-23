@@ -1,6 +1,8 @@
-import {useStripe} from '@stripe/stripe-react-native';
 import React, {useEffect} from 'react';
 import {Alert, Button, View} from 'react-native';
+
+import {useStripe} from '@stripe/stripe-react-native';
+
 import DefaultPadding from '../../components/DefaultPadding.component';
 import Header from '../../components/Header.component';
 
