@@ -31,9 +31,11 @@ const PaymentScreen: React.FC<PaymentScreenProps> = ({route, navigation}) => {
         testEnv: true,
         currencyCode: 'USD',
       },
+      applePay: {
+        merchantCountryCode: 'US',
+      },
     });
 
-    console.log(error);
     if (error) {
       Alert.alert('Payment Failed');
     }

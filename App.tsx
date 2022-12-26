@@ -18,7 +18,7 @@ const App = () => {
     <StripeProvider
       publishableKey="pk_test_51MH5jwFRS4M4CePpgDiykMPrHJ65NeMOgSaSsavtPdNSOCg4xjiaeO18nZLP0GGL82OFMvnyYxTeHaq1ifsixsp200MvSHPxFD"
       urlScheme="your-url-scheme"
-      merchantIdentifier="merchant.com.{{YOUR_APP_NAME}}">
+      merchantIdentifier="merchant.org.reactjs.native.example.AvasoftStripe">
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
