@@ -1,8 +1,14 @@
-import React, {useEffect} from 'react';
-import {Alert, Button, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Alert, Button, Text, TextInput, View} from 'react-native';
 
-import {useApplePay, useGooglePay} from '@stripe/stripe-react-native';
+import {
+  useApplePay,
+  useGooglePay,
+  useStripe,
+} from '@stripe/stripe-react-native';
 
+import DefaultPadding from '../components/DefaultPadding.component';
+import Header from '../components/Header.component';
 import {createPaymentIntent} from '../services/stripe/payment_intent.service';
 
 const CustomStripeWidgetScreen: React.FC = () => {
@@ -10,6 +16,11 @@ const CustomStripeWidgetScreen: React.FC = () => {
     useGooglePay();
   const {isApplePaySupported, presentApplePay, confirmApplePayPayment} =
     useApplePay();
+  const {confirmPayment} = useStripe();
+  const [cardNumber, setCardNumber] = useState<string>();
+  const [month, setMonth] = useState<string>();
+  const [year, setYear] = useState<string>();
+  const [cvv, setCVV] = useState<string>();
 
   useEffect(() => {
     checkGooglePaySupport();
@@ -115,12 +126,93 @@ const CustomStripeWidgetScreen: React.FC = () => {
     Alert.alert('Success', 'The payment was confirmed successfully.');
   };
 
+  const doPay = () => {};
+
   return (
-    <View>
-      <Button onPress={doGooglePay} title="Google Pay" />
-      {isApplePaySupported ? (
-        <Button onPress={applePaySupport} title="Apple Pay" />
-      ) : null}
+    <View style={{flex: 1}}>
+      <Header value={'Stripe Native Elements'} />
+      <DefaultPadding style={{marginTop: 75}}>
+        <TextInput
+          style={{
+            height: 40,
+            width: '100%',
+            borderRadius: 8,
+            padding: 10,
+            backgroundColor: '#F5F5F5',
+            marginBottom: 30,
+          }}
+          placeholder="Enter Card Number"
+          onChangeText={(text: string) => {
+            setCardNumber(text);
+          }}
+        />
+        <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+          <TextInput
+            style={{
+              height: 40,
+              width: '45%',
+              borderRadius: 8,
+              padding: 10,
+              backgroundColor: '#F5F5F5',
+              marginBottom: 30,
+            }}
+            placeholder="Month"
+            onChangeText={(text: string) => {
+              setMonth(text);
+            }}
+          />
+          <TextInput
+            style={{
+              height: 40,
+              width: '45%',
+              borderRadius: 8,
+              padding: 10,
+              backgroundColor: '#F5F5F5',
+              marginBottom: 30,
+            }}
+            placeholder="Year"
+            onChangeText={(text: string) => {
+              setYear(text);
+            }}
+          />
+        </View>
+        <View style={{width: '100%'}}></View>
+        <TextInput
+          style={{
+            height: 40,
+            width: '100%',
+            borderRadius: 8,
+            padding: 10,
+            backgroundColor: '#F5F5F5',
+            marginBottom: 30,
+          }}
+          placeholder="CVV"
+          onChangeText={(text: string) => {
+            setCVV(text);
+          }}
+        />
+        <Button onPress={doPay} title="Pay" />
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingTop: 10,
+            paddingBottom: 10,
+          }}>
+          <Text>or</Text>
+        </View>
+        <Button onPress={doGooglePay} title="Google Pay" />
+        <View
+          style={{
+            justifyContent: 'center',
+            alignItems: 'center',
+            paddingTop: 10,
+            paddingBottom: 10,
+          }}>
+          <Text>or</Text>
+        </View>
+        <Button onPress={doApplePay} title="Apple Pay" />
+      </DefaultPadding>
     </View>
   );
 };

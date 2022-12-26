@@ -22,6 +22,11 @@ const App = () => {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
+            name="CustomStripeWidgetScreen"
+            component={CustomStripeWidgetScreen}
+            options={{headerShown: false}}
+          />
+          <Stack.Screen
             name="CustomerFormScreen"
             component={CustomerFormScreen}
             options={{headerShown: false}}
@@ -41,11 +46,11 @@ const App = () => {
             component={StripeWidget}
             options={{headerShown: false}}
           />
-          <Stack.Screen
+          {/* <Stack.Screen
             name="CustomStripeWidgetScreen"
             component={CustomStripeWidgetScreen}
             options={{headerShown: false}}
-          />
+          /> */}
         </Stack.Navigator>
       </NavigationContainer>
     </StripeProvider>
