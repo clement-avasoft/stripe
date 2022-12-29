@@ -4,7 +4,7 @@ const SECRET_KEY =
   'sk_test_51MH5jwFRS4M4CePp8Ctc34zD5gwlMxS1taAtXhcrLKSzm4aT2hV5Usw249RbQ8yZNhcVqUH3bYZQJg2uKLMfQdnj00m5xuF5DU';
 
 const createPaymentIntent = async (
-  amount: string,
+  amount: number,
   customerId: string,
   description: string,
 ) => {
@@ -22,8 +22,27 @@ const createPaymentIntent = async (
 
     return payment_intent.data;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 
-export {createPaymentIntent};
+const updatePaymentIntent = async (id: string, pMethodId: string) => {
+  try {
+    let payment_intent = await axios.post(
+      `https://api.stripe.com/v1/payment_intents/${id}?payment_method=${pMethodId}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${SECRET_KEY}`,
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      },
+    );
+
+    return payment_intent.data;
+  } catch (error) {
+    return error;
+  }
+};
+
+export {createPaymentIntent, updatePaymentIntent};

@@ -18,23 +18,27 @@ const createCustomer = async (name: string) => {
     );
     return customer.data;
   } catch (error) {
-    console.log(error);
+    return error;
   }
 };
 
 const createEphemeralKey = async (customerId: string) => {
-  let ephemeralKey: any = await axios.post(
-    `https://api.stripe.com/v1/ephemeral_keys?customer=${customerId}`,
-    {},
-    {
-      headers: {
-        Authorization: `Bearer ${SECRET_KEY}`,
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Stripe-Version': '2022-11-15',
+  try {
+    let ephemeralKey: any = await axios.post(
+      `https://api.stripe.com/v1/ephemeral_keys?customer=${customerId}`,
+      {},
+      {
+        headers: {
+          Authorization: `Bearer ${SECRET_KEY}`,
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Stripe-Version': '2022-11-15',
+        },
       },
-    },
-  );
-  return ephemeralKey.data;
+    );
+    return ephemeralKey.data;
+  } catch (error) {
+    return error;
+  }
 };
 
 export {createCustomer, createEphemeralKey};
