@@ -57,6 +57,7 @@ const CustomStripeWidgetScreen: React.FC<CustomStripeWidgetScreenProps> = ({
   const [loaderOnPay, setLoaderOnPay] = useState<boolean>(false);
   const [loaderOnGooglePay, setLoaderOnGooglePay] = useState<boolean>(false);
   const [loaderOnApplePay, setLoaderOnApplePay] = useState<boolean>(false);
+  const [isGPaySupported, setIsGPaySupported] = useState<boolean>(true);
 
   const {isGooglePaySupported, initGooglePay, presentGooglePay} =
     useGooglePay();
@@ -72,7 +73,7 @@ const CustomStripeWidgetScreen: React.FC<CustomStripeWidgetScreenProps> = ({
 
   const initializeGooglePay = async () => {
     if (!(await isGooglePaySupported({testEnv: true}))) {
-      return;
+      return setIsGPaySupported(false);
     }
 
     const {error} = await initGooglePay({
@@ -488,27 +489,33 @@ const CustomStripeWidgetScreen: React.FC<CustomStripeWidgetScreenProps> = ({
           loading={loaderOnPay ? true : false}
           style={{paddingTop: 40}}
         />
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'center',
-            paddingTop: 10,
-            paddingBottom: 10,
-          }}>
-          <Text>or</Text>
-        </View>
-        <CustomButton
-          value={loaderOnGooglePay ? '' : 'Google Pay'}
-          textColor="#ffffff"
-          onPress={doGooglePay}
-          loaderColor="#6FBAFF"
-          backgroundColor={loaderOnGooglePay ? '#D3D3D35A' : ''}
-          disable={
-            loaderOnPay || loaderOnApplePay || loaderOnGooglePay ? true : false
-          }
-          loading={loaderOnGooglePay ? true : false}
-          style={{paddingTop: 40}}
-        />
+        {isGPaySupported ? (
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+              paddingTop: 10,
+              paddingBottom: 10,
+            }}>
+            <Text>or</Text>
+          </View>
+        ) : null}
+        {isGPaySupported ? (
+          <CustomButton
+            value={loaderOnGooglePay ? '' : 'Google Pay'}
+            textColor="#ffffff"
+            onPress={doGooglePay}
+            loaderColor="#6FBAFF"
+            backgroundColor={loaderOnGooglePay ? '#D3D3D35A' : ''}
+            disable={
+              loaderOnPay || loaderOnApplePay || loaderOnGooglePay
+                ? true
+                : false
+            }
+            loading={loaderOnGooglePay ? true : false}
+            style={{paddingTop: 40}}
+          />
+        ) : null}
         {isApplePaySupported ? (
           <View
             style={{
