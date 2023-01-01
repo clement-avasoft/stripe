@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 
 import {useStripe} from '@stripe/stripe-react-native';
-import {Alert, Button, StyleSheet, View} from 'react-native';
+import {Alert, StyleSheet, View} from 'react-native';
 
 import CustomButton from '../../components/CustomButton.component';
 import DefaultPadding from '../../components/DefaultPadding.component';
